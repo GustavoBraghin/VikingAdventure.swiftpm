@@ -130,6 +130,7 @@ class VikingIntro: SKScene {
             }else if sceneInd == 5 {
                 label.text = TextPhase.end.rawValue
                 label.fontSize = 36
+                labelButton.removeFromParent()
             }
             
         break
