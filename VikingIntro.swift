@@ -119,6 +119,8 @@ class VikingIntro: SKScene {
                 sceneInd += 1
             } else if sceneInd == 4 {
                 item.removeFromParent()
+                labelButton.removeFromParent()
+                
                 itemBottom = self.sceneBuilder!.createAxeBottom(imageName: "horn")
                 itemTop = self.sceneBuilder!.createViking(imageName: "Viking")
                 label.text = TextPhase.hornLevel.rawValue
