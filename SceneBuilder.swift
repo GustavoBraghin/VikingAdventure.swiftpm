@@ -20,7 +20,7 @@ public class SceneBuilder {
         let background = SKSpriteNode(imageNamed: "background.png")
         background.name = "background"
         background.zPosition = -1
-        background.size = CGSize(width: 768, height: 1024)
+        background.size = CGSize(width: frame.width, height: frame.height)
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         return background
     }
@@ -90,6 +90,15 @@ public class SceneBuilder {
         axeBottom.zPosition = 4
         return axeBottom
     }
+    
+    public func createViking(imageName: String) -> SKSpriteNode {
+        let axeTop = SKSpriteNode(imageNamed: imageName)
+        axeTop.name = imageName
+        axeTop.position = CGPoint(x: frame.width * 0.69, y: frame.height * 0.20)
+        axeTop.zPosition = 3
+        return axeTop
+    }
+    
 }
 
 extension UIColor {

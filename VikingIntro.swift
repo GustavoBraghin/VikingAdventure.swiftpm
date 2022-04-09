@@ -61,10 +61,10 @@ class VikingIntro: SKScene {
         label = sceneBuilder!.createLabel(textField: textField)
         label.text = TextPhase.intro.rawValue
         labelButton = sceneBuilder!.createLabelButton()
+        itemTop = sceneBuilder!.createViking(imageName: "Viking")
         
         //to axePhase
         item = sceneBuilder!.createAxeShape(imageName: "axeShape")
-        itemTop = sceneBuilder!.createAxeTop(imageName: "axeTop")
         itemBottom = sceneBuilder!.createAxeBottom(imageName: "axeBottom")
         previewPositionAxeTop = itemTop.position
         previewPositionAxeBottom = itemBottom.position
@@ -80,6 +80,7 @@ class VikingIntro: SKScene {
         addChild(textField)
         addChild(label)
         addChild(labelButton)
+        addChild(itemTop)
         backgroundMusic?.play()
     }
     
@@ -96,9 +97,11 @@ class VikingIntro: SKScene {
             
         case "textFieldButton":
             if sceneInd == 0 {
+                itemTop.removeFromParent()
                 label.text = TextPhase.axeLevel.rawValue
                 label.fontSize = 42
                 labelButton.removeFromParent()
+                itemTop = sceneBuilder!.createAxeTop(imageName: "axeTop")
                 addChild(item)
                 addChild(itemTop)
                 addChild(itemBottom)
@@ -117,10 +120,12 @@ class VikingIntro: SKScene {
             } else if sceneInd == 4 {
                 item.removeFromParent()
                 itemBottom = self.sceneBuilder!.createAxeBottom(imageName: "horn")
+                itemTop = self.sceneBuilder!.createViking(imageName: "Viking")
                 label.text = TextPhase.hornLevel.rawValue
                 label.fontSize = 34
                 
                 addChild(itemBottom)
+                addChild(itemTop)
                 sceneInd += 1
             }else if sceneInd == 5 {
                 label.text = TextPhase.end.rawValue
