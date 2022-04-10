@@ -77,8 +77,9 @@ class VikingIntro: SKScene {
         addChild(label)
         addChild(labelButton)
         addChild(itemTop)
-        //backgroundMusic?.play()
-        sound = SKAction.playSoundFileNamed("Part2.mp3", waitForCompletion: true)
+        backgroundMusic?.play()
+        sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
+        self.run(sound!)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -103,7 +104,7 @@ class VikingIntro: SKScene {
                 addChild(itemTop)
                 addChild(itemBottom)
                 
-                self.sound = SKAction.playSoundFileNamed(UlfVoice.axeLevel.rawValue, waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
                 self.run(sound!)
                 sceneInd += 1
             } else if sceneInd == 2 {
@@ -130,7 +131,7 @@ class VikingIntro: SKScene {
                 addChild(itemBottom)
                 addChild(itemTop)
                 
-                self.sound = SKAction.playSoundFileNamed(UlfVoice.hornLevel.rawValue, waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
                 self.run(sound!)
                 sceneInd += 1
             }else if sceneInd == 5 {
@@ -138,7 +139,7 @@ class VikingIntro: SKScene {
                 label.fontSize = 36
                 labelButton.removeFromParent()
                 
-                self.sound = SKAction.playSoundFileNamed(UlfVoice.end.rawValue, waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
                 self.run(sound!)
             }
             
@@ -150,7 +151,7 @@ class VikingIntro: SKScene {
             
         case "replayButton":
             print("Play narration again")
-            sound = SKAction.playSoundFileNamed("Part1.mp3", waitForCompletion: true)
+            sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
             print(sound!)
             self.run(sound!)
         break
