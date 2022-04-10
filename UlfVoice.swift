@@ -7,8 +7,8 @@
 
 
 enum UlfVoice: String {
-    case intro = "Part1.mp3"
-    case axeLevel = "Part2.mp3"
-    case hornLevel = "Part3.mp3"
-    case end = "Part4.mp3"
+    case intro = "intro.mp3"
+    case axeLevel = "dragndrop.mp3"
+    case hornLevel = "hornphase.mp3"
+    case end = "end.mp3"
 }

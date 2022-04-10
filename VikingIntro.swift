@@ -33,7 +33,8 @@ class VikingIntro: SKScene {
     var previewPositionAxeTop: CGPoint?
     var previewPositionAxeBottom: CGPoint?
     
-    var sound: SKAction?
+    var currentSound = ""
+    var curretDuration = Double(0)
     lazy var backgroundMusic: AVAudioPlayer? = {
         guard let url = Bundle.main.url(forResource: "backgroundSound", withExtension: "mp3") else {
             return nil
@@ -79,8 +80,7 @@ class VikingIntro: SKScene {
         addChild(itemTop)
         backgroundMusic?.volume = 0.12
         backgroundMusic?.play()
-        sound = SKAction.playSoundFileNamed("intro.mp3", waitForCompletion: false)
-        self.run(sound!)
+        playSound(fileName: UlfVoice.intro.rawValue, duration: VoiceDuration.intro.rawValue)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -105,8 +105,7 @@ class VikingIntro: SKScene {
                 addChild(itemTop)
                 addChild(itemBottom)
                 
-                self.sound = SKAction.playSoundFileNamed("dragndrop.mp3", waitForCompletion: false)
-                self.run(sound!)
+                playSound(fileName: UlfVoice.axeLevel.rawValue, duration: VoiceDuration.axeLevel.rawValue)
                 sceneInd += 1
             } else if sceneInd == 2 {
                 item.removeFromParent()
@@ -132,16 +131,14 @@ class VikingIntro: SKScene {
                 addChild(itemBottom)
                 addChild(itemTop)
                 
-                self.sound = SKAction.playSoundFileNamed("hornphase.mp3", waitForCompletion: false)
-                self.run(sound!)
+                playSound(fileName: UlfVoice.hornLevel.rawValue, duration: VoiceDuration.hornLevel.rawValue)
                 sceneInd += 1
             }else if sceneInd == 5 {
                 label.text = TextPhase.end.rawValue
                 label.fontSize = 36
                 labelButton.removeFromParent()
                 
-                self.sound = SKAction.playSoundFileNamed("end.mp3", waitForCompletion: false)
-                self.run(sound!)
+                playSound(fileName: UlfVoice.end.rawValue, duration: VoiceDuration.end.rawValue)
             }
             
         break
@@ -151,8 +148,7 @@ class VikingIntro: SKScene {
         break
             
         case "replayButton":
-            print("Play narration again")
-            self.run(sound!)
+            playSound(fileName: currentSound, duration: curretDuration)
         break
             
         default:
@@ -303,6 +299,29 @@ class VikingIntro: SKScene {
         return false
     }
     
+    func playSound(fileName: String, duration: Double) {
+        self.currentSound = fileName
+        self.curretDuration = duration
+        
+        let sound = SKAction.playSoundFileNamed(fileName, waitForCompletion: false)
+        let runSound = SKAction.run({
+            self.labelButton.isUserInteractionEnabled = true
+            self.replayButton.isUserInteractionEnabled = true
+            print("NotInteractive")
+            self.run(sound)
+            print("Running sound")
+        })
+        let wait = SKAction.wait(forDuration: duration)
+        let interactive = SKAction.run({
+            self.labelButton.isUserInteractionEnabled = false
+            self.replayButton.isUserInteractionEnabled = false
+            print("interactive")
+        })
+        
+        let group = SKAction.group([runSound,wait])
+        let seq = SKAction.sequence([group,interactive])
+        self.run(seq)
+    }
 }
 
 //MARK: - CREATING VIEW AND SCENE
