@@ -77,8 +77,9 @@ class VikingIntro: SKScene {
         addChild(label)
         addChild(labelButton)
         addChild(itemTop)
+        backgroundMusic?.volume = 0.12
         backgroundMusic?.play()
-        sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
+        sound = SKAction.playSoundFileNamed("intro.mp3", waitForCompletion: false)
         self.run(sound!)
     }
     
@@ -104,7 +105,7 @@ class VikingIntro: SKScene {
                 addChild(itemTop)
                 addChild(itemBottom)
                 
-                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("dragndrop.mp3", waitForCompletion: false)
                 self.run(sound!)
                 sceneInd += 1
             } else if sceneInd == 2 {
@@ -131,7 +132,7 @@ class VikingIntro: SKScene {
                 addChild(itemBottom)
                 addChild(itemTop)
                 
-                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("hornphase.mp3", waitForCompletion: false)
                 self.run(sound!)
                 sceneInd += 1
             }else if sceneInd == 5 {
@@ -139,7 +140,7 @@ class VikingIntro: SKScene {
                 label.fontSize = 36
                 labelButton.removeFromParent()
                 
-                self.sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
+                self.sound = SKAction.playSoundFileNamed("end.mp3", waitForCompletion: false)
                 self.run(sound!)
             }
             
@@ -151,8 +152,6 @@ class VikingIntro: SKScene {
             
         case "replayButton":
             print("Play narration again")
-            sound = SKAction.playSoundFileNamed("hornSound.mp3", waitForCompletion: false)
-            print(sound!)
             self.run(sound!)
         break
             
