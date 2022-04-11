@@ -24,10 +24,7 @@ class VikingIntro: SKScene {
     var item = SKSpriteNode()
     var itemTop = SKSpriteNode()
     var itemBottom = SKSpriteNode()
-//    var elmoShape = SKSpriteNode()
-//    var elmoTop = SKSpriteNode()
-//    var elmoBottom = SKSpriteNode()
-    //var horn = SKSpriteNode()
+
     var rotationRec = UIRotationGestureRecognizer()
     var sceneBuilder: SceneBuilder?
     var previewPositionAxeTop: CGPoint?
@@ -35,6 +32,15 @@ class VikingIntro: SKScene {
     
     var currentSound = ""
     var curretDuration = Double(0)
+    
+    var replayButtonPosition = CGPoint()
+    var itemBottomPosition = CGPoint()
+    var itemTopPosition = CGPoint()
+    var itemShapePosition = CGPoint()
+    var labelButtonPosition = CGPoint()
+    var vikingPosition = CGPoint()
+    
+    
     lazy var backgroundMusic: AVAudioPlayer? = {
         guard let url = Bundle.main.url(forResource: "backgroundSound", withExtension: "mp3") else {
             return nil
@@ -48,21 +54,29 @@ class VikingIntro: SKScene {
             return nil
         }
     }()
+    
+    
     override func didMove(to view: SKView) {
         sceneBuilder = SceneBuilder(frame: frame)
+        replayButtonPosition = CGPoint(x: frame.width * 0.08, y: frame.height * 0.07)
+        itemBottomPosition = CGPoint(x: frame.width * 0.2, y: frame.height * 0.22)
+        itemTopPosition = CGPoint(x: frame.width * 0.8, y: frame.height * 0.2)
+        itemShapePosition = CGPoint(x: frame.midX, y: frame.height * 0.4)
+        labelButtonPosition = CGPoint(x: frame.width * 0.81, y: frame.height * 0.62)
+        vikingPosition = CGPoint(x: frame.width * 0.69, y: frame.height * 0.20)
         
         //to all phases
         background = sceneBuilder!.createBackground()
-        replayButton = sceneBuilder!.createReplayButton()
+        replayButton = sceneBuilder!.createItem(imageName: "replayButton", position: replayButtonPosition)
         textField = sceneBuilder!.createTextField()
         label = sceneBuilder!.createLabel(textField: textField)
         label.text = TextPhase.intro.rawValue
-        labelButton = sceneBuilder!.createLabelButton()
-        itemTop = sceneBuilder!.createViking(imageName: "Viking")
+        labelButton = sceneBuilder!.createItem(imageName: "labelButton", position: labelButtonPosition)
+        itemTop = sceneBuilder!.createItem(imageName: "Viking", position: vikingPosition)
         
         //to axePhase
-        item = sceneBuilder!.createAxeShape(imageName: "axeShape")
-        itemBottom = sceneBuilder!.createAxeBottom(imageName: "axeBottom")
+        item = sceneBuilder!.createItem(imageName: "axeShape", position: itemShapePosition)
+        itemBottom = sceneBuilder!.createItem(imageName: "axeBottom", position: itemBottomPosition)
         previewPositionAxeTop = itemTop.position
         previewPositionAxeBottom = itemBottom.position
         
@@ -94,13 +108,13 @@ class VikingIntro: SKScene {
         
         switch node.name {
             
-        case "textFieldButton":
+        case "labelButton":
             if sceneInd == 0 {
                 itemTop.removeFromParent()
                 label.text = TextPhase.axeLevel.rawValue
                 label.fontSize = 42
                 labelButton.removeFromParent()
-                itemTop = sceneBuilder!.createAxeTop(imageName: "axeTop")
+                itemTop = sceneBuilder!.createItem(imageName: "axeTop", position: itemTopPosition)
                 addChild(item)
                 addChild(itemTop)
                 addChild(itemBottom)
@@ -110,9 +124,9 @@ class VikingIntro: SKScene {
             } else if sceneInd == 2 {
                 item.removeFromParent()
                 labelButton.removeFromParent()
-                item = self.sceneBuilder!.createAxeShape(imageName: "elmoShape")
-                itemTop = self.sceneBuilder!.createAxeTop(imageName: "elmoR")
-                itemBottom = self.sceneBuilder!.createAxeBottom(imageName: "elmoL")
+                item = self.sceneBuilder!.createItem(imageName: "elmoShape", position: itemShapePosition)
+                itemTop = self.sceneBuilder!.createItem(imageName: "elmoR", position: itemTopPosition)
+                itemBottom = self.sceneBuilder!.createItem(imageName: "elmoL", position: itemBottomPosition)
                 
                 addChild(item)
                 addChild(itemTop)
@@ -123,8 +137,9 @@ class VikingIntro: SKScene {
                 item.removeFromParent()
                 labelButton.removeFromParent()
                 
-                itemBottom = self.sceneBuilder!.createAxeBottom(imageName: "horn")
-                itemTop = self.sceneBuilder!.createViking(imageName: "Viking")
+                itemBottom = self.sceneBuilder!.createItem(imageName: "horn", position: itemBottomPosition)
+                itemTop = self.sceneBuilder!.createItem(imageName: "Viking", position: vikingPosition)
+                itemTop.zPosition = 3
                 label.text = TextPhase.hornLevel.rawValue
                 label.fontSize = 34
                 
