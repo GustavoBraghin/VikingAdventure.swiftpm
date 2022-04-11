@@ -24,7 +24,7 @@ class VikingIntro: SKScene {
     var item = SKSpriteNode()
     var itemTop = SKSpriteNode()
     var itemBottom = SKSpriteNode()
-
+    
     var rotationRec = UIRotationGestureRecognizer()
     var sceneBuilder: SceneBuilder?
     var previewPositionAxeTop: CGPoint?
@@ -120,7 +120,7 @@ class VikingIntro: SKScene {
                 addChild(itemBottom)
                 
                 playSound(fileName: UlfVoice.axeLevel.rawValue, duration: VoiceDuration.axeLevel.rawValue)
-                sceneInd += 3
+                sceneInd += 1
             } else if sceneInd == 2 {
                 item.removeFromParent()
                 labelButton.removeFromParent()
@@ -137,6 +137,9 @@ class VikingIntro: SKScene {
                 item.removeFromParent()
                 labelButton.removeFromParent()
                 
+                let ships = self.sceneBuilder!.createItem(imageName: "ships", position: CGPoint(x: frame.midX, y: frame.midY))
+                
+                
                 itemBottom = self.sceneBuilder!.createItem(imageName: "horn", position: itemBottomPosition)
                 itemTop = self.sceneBuilder!.createItem(imageName: "Viking", position: vikingPosition)
                 itemTop.zPosition = 3
@@ -145,6 +148,7 @@ class VikingIntro: SKScene {
                 
                 addChild(itemBottom)
                 addChild(itemTop)
+                addChild(ships)
                 
                 playSound(fileName: UlfVoice.hornLevel.rawValue, duration: VoiceDuration.hornLevel.rawValue)
                 sceneInd += 1
