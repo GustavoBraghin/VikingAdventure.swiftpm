@@ -92,7 +92,7 @@ class VikingIntro: SKScene {
         addChild(label)
         addChild(labelButton)
         addChild(itemTop)
-        backgroundMusic?.volume = 0.12
+        backgroundMusic?.volume = 0.05
         backgroundMusic?.play()
         playSound(fileName: UlfVoice.intro.rawValue, duration: VoiceDuration.intro.rawValue)
     }
@@ -180,7 +180,6 @@ class VikingIntro: SKScene {
         if let touch = touches.first, let node = draggableNode {
             let touchLocation = touch.location(in: self)
             node.position = touchLocation
-            print(node.position)
         }
     }
     
@@ -327,10 +326,8 @@ class VikingIntro: SKScene {
             }
         }else if (draggableNode?.name == "horn"){
             if (draggableNode!.position.x >= frame.width * 0.52 && draggableNode!.position.x <= frame.width * 0.99) && (draggableNode!.position.y >= frame.height * 0.01 && draggableNode!.position.y <= frame.height * 0.5){
-                print("YESSS")
                 return true
             }else {
-                print("Nooooo")
                 return false
             }
         }
@@ -355,7 +352,6 @@ class VikingIntro: SKScene {
             self.itemBottom.isUserInteractionEnabled = false
             self.labelButton.isUserInteractionEnabled = false
             self.replayButton.isUserInteractionEnabled = false
-            print("interactive")
         })
         
         let group = SKAction.group([runSound,wait])
