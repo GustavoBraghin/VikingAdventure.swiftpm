@@ -7,9 +7,10 @@
 
 
 enum VoiceDuration: Double {
-    case intro = 15
+    case intro = 14
     case axeLevel = 6
     case hornLevel = 12
+    case hornSound = 5.5
     case end = 9
 }
 

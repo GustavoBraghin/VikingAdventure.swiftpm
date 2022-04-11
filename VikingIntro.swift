@@ -31,7 +31,7 @@ class VikingIntro: SKScene {
     var previewPositionAxeBottom: CGPoint?
     
     var currentSound = ""
-    var curretDuration = Double(0)
+    var currentDuration = Double(0)
     
     var replayButtonPosition = CGPoint()
     var itemBottomPosition = CGPoint()
@@ -120,7 +120,7 @@ class VikingIntro: SKScene {
                 addChild(itemBottom)
                 
                 playSound(fileName: UlfVoice.axeLevel.rawValue, duration: VoiceDuration.axeLevel.rawValue)
-                sceneInd += 1
+                sceneInd += 3
             } else if sceneInd == 2 {
                 item.removeFromParent()
                 labelButton.removeFromParent()
@@ -163,7 +163,7 @@ class VikingIntro: SKScene {
         break
             
         case "replayButton":
-            playSound(fileName: currentSound, duration: curretDuration)
+            playSound(fileName: currentSound, duration: currentDuration)
         break
             
         default:
@@ -183,10 +183,16 @@ class VikingIntro: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (draggableNode != nil) {
             if (verifyPosition() && verifyRotation()) {
+                if(draggableNode?.name == "horn") {
+                    itemBottom.removeFromParent()
+                    self.playSound(fileName: UlfVoice.hornSound.rawValue, duration: VoiceDuration.hornSound.rawValue)
+                    self.addChild(labelButton)
+                }
             }else{
                 draggableNodeToDefaultPosition()
-                draggableNode = nil
+                
             }
+            draggableNode = nil
         }
     }
     
@@ -231,6 +237,9 @@ class VikingIntro: SKScene {
                     }else if (draggableNode?.name == "elmoR" && didFix || draggableNode?.name == "elmoL" && didFix){
                         item.texture = SKTexture(imageNamed: "elmo.png")
                         sceneInd += 1
+                        self.addChild(labelButton)
+                    }else if(draggableNode?.name == "horn") {
+                        self.playSound(fileName: UlfVoice.hornSound.rawValue, duration: VoiceDuration.hornSound.rawValue)
                         self.addChild(labelButton)
                     }
                     didFix.toggle()
@@ -281,6 +290,8 @@ class VikingIntro: SKScene {
             }else {
                 return false
             }
+        }else if(draggableNode?.name == "horn"){
+            return true
         }
         return false
     }
@@ -310,24 +321,34 @@ class VikingIntro: SKScene {
             }else {
                 return false
             }
+        }else if (draggableNode?.name == "horn"){
+            if (draggableNode!.position.x >= frame.width * 0.52 && draggableNode!.position.x <= frame.width * 0.99) && (draggableNode!.position.y >= frame.height * 0.01 && draggableNode!.position.y <= frame.height * 0.5){
+                print("YESSS")
+                return true
+            }else {
+                print("Nooooo")
+                return false
+            }
         }
         return false
     }
     
     func playSound(fileName: String, duration: Double) {
         self.currentSound = fileName
-        self.curretDuration = duration
+        self.currentDuration = duration
         
         let sound = SKAction.playSoundFileNamed(fileName, waitForCompletion: false)
         let runSound = SKAction.run({
+            if(fileName == UlfVoice.hornLevel.rawValue){
+                self.itemBottom.isUserInteractionEnabled = true
+            }
             self.labelButton.isUserInteractionEnabled = true
             self.replayButton.isUserInteractionEnabled = true
-            print("NotInteractive")
             self.run(sound)
-            print("Running sound")
         })
         let wait = SKAction.wait(forDuration: duration)
         let interactive = SKAction.run({
+            self.itemBottom.isUserInteractionEnabled = false
             self.labelButton.isUserInteractionEnabled = false
             self.replayButton.isUserInteractionEnabled = false
             print("interactive")
