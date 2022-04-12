@@ -137,7 +137,7 @@ class VikingIntro: SKScene {
                 item.removeFromParent()
                 labelButton.removeFromParent()
                 
-                let ships = self.sceneBuilder!.createItem(imageName: "ships", position: CGPoint(x: frame.midX, y: frame.midY))
+                let ships = self.sceneBuilder!.createItem(imageName: "ships", position: CGPoint(x: frame.midX, y: frame.height * 0.48))
                 
                 
                 itemBottom = self.sceneBuilder!.createItem(imageName: "horn", position: itemBottomPosition)
