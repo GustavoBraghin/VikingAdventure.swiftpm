@@ -22,6 +22,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>VikingAdventure</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>VikingFun</key>
 		<dict>
 			<key>primary</key>
